@@ -1,0 +1,4 @@
+xunit
+xunit.runner.console
+FsUnit
+FsUnit.xUnit

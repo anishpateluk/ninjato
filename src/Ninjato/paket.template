@@ -1,0 +1,23 @@
+type project
+owners
+    Anish Patel
+authors 
+    Anish Patel
+projectUrl
+    http://github.com/anishpateluk/Ninjato
+iconUrl
+    https://raw.githubusercontent.com/anishpateluk/Ninjato/master/docs/files/img/logo.png
+licenseUrl
+    http://github.com/anishpateluk/Ninjato/blob/master/LICENSE.txt
+requireLicenseAcceptance
+    false
+copyright
+    Copyright 2015
+tags
+    f# sql
+summary
+    Reporting Service Application
+description
+    Reporting service app built using f#. Intended as an alternative to SSRS
+
+

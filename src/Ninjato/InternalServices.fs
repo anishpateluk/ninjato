@@ -1,8 +1,8 @@
-﻿namespace Ninjato.Engine.Services
+namespace Ninjato.Engine.Services
 
 module stringExtensions = 
     open System.Runtime.CompilerServices
-    open System.Text.RegularExpressions    
+    open System.Text.RegularExpressions 
     
     [<Extension>]
     type StringExtension() =
@@ -22,7 +22,7 @@ module ExpressionEvaluation =
     let private ``swap double dollars for double underscores`` (token: string) =
         token.Replace("$","_")
 
-    let private ``format string`` token =  
+    let private ``format string`` token = 
         token
         |> ``remove square brackets``
         |> ``swap double dollars for double underscores``
@@ -52,7 +52,7 @@ module QueryConstruction =
     let internal ``custom sql constructs`` = new Regex("(?<if>\${1}\?{1}\s*\({1}(\s|.)*?\){1}\s*\{{1})|(?<else>\${1}\:{1}\s*\{{1})|(?<end>\}{1})", RegexOptions.Compiled ||| RegexOptions.ExplicitCapture)
     let internal ``if construct expression`` = new Regex("\$\?\s*\((?<expression>.*?)\)\s*\{", RegexOptions.Compiled ||| RegexOptions.ExplicitCapture)
 
-    type internal Query =
+    type Query =
         { Sql: string;
           Parameters: Map<string, Object> }
 
@@ -84,7 +84,7 @@ module QueryConstruction =
         let evaluation = ``evaluate expression`` expression variables
         evaluation
           
-    let private ``build tree`` (seq: seq<ConstructPart>) (count: int) =    
+    let private ``build tree`` (seq: seq<ConstructPart>) (count: int) =
         let openConstructs = new Stack<Node>(count)
         let mutable tree = []
         let mutable depth = 0
@@ -98,7 +98,7 @@ module QueryConstruction =
                         let parent = openConstructs.Peek()
                         parent.Nested <- parent.Nested @ [n]
                     
-                    openConstructs.Push(n)                    
+                    openConstructs.Push(n)
                     depth <- depth + 1
 
                 | End _ -> 
@@ -146,10 +146,10 @@ module QueryConstruction =
                                     head.Nested.[head.Nested.Length - 1].Tail.Value.Unwrap
                                     |> fun v -> v.Index + v.Length
 
-                                traverse csql sb false ``content start`` head.Nested argMap |> ignore    
+                                traverse csql sb false ``content start`` head.Nested argMap |> ignore
                                 sb.Append(``extract content`` ``last point`` ``content stop``) |> ignore 
 
-                            | false ->                             
+                            | false ->
                                 sb.Append(``extract content`` ``content start`` ``content stop``) |> ignore
                                                          
                     traverse str sb evaluation ``next pre content start`` tail argMap
@@ -158,7 +158,7 @@ module QueryConstruction =
             traverse csql (new StringBuilder()) false 0 tree argMap
             |> fun sb -> 
                 let lastNode = tree.[tree.Length - 1].Tail.Value.Unwrap
-                sb.Append(``extract content`` (lastNode.Index + lastNode.Length) csql.Length)   
+                sb.Append(``extract content`` (lastNode.Index + lastNode.Length) csql.Length)
             |> fun sb -> sb.ToString()
             |> fun s -> s.RemoveWhiteSpace()
 
@@ -166,7 +166,7 @@ module QueryConstruction =
 
     let private ``parameterize query`` (sql: string) (argMap: Map<string, string>) = 
         Seq.fold(fun (tup: int*string*Map<string, Object>) (kvp: KeyValuePair<string, string>) -> 
-                        let i, str, map = tup                        
+                        let i, str, map = tup
                         if str.Contains(kvp.Key) then
                             if kvp.Key.Contains("[]") then
                                 let ``untrimmed args`` = kvp.Value.Split([|','|], StringSplitOptions.RemoveEmptyEntries)
@@ -189,7 +189,7 @@ module QueryConstruction =
             let i, str, map = tup
             { Sql = str; Parameters = map  }
 
-    let internal ``construct query`` (csql: string) (argMap: Map<string, string>) = 
+    let ``construct query`` (csql: string) (argMap: Map<string, string>) = 
         let str = csql.RemoveWhiteSpace()
         
         let ``construct parts`` = ``custom sql constructs``.Matches(str)
@@ -213,6 +213,3 @@ module QueryConstruction =
             |> ``parameterize query`` <| argMap
 
         ``parameterized sql with params``
-        
-
-

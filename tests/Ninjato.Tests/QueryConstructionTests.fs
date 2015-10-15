@@ -1,4 +1,4 @@
-﻿namespace Ninjato.Tests
+namespace Ninjato.Tests
 
 open Ninjato.Engine.Services.stringExtensions
 open Ninjato.Engine.Services.QueryConstruction
