@@ -7,3 +7,10 @@ version: 0.0.1.{build}
 artifacts:
   - path: bin
     name: bin
+  - path: 'bin\*.nupkg'
+deploy:
+  provider: NuGet
+  api_key:
+    secure: qkPChs++rKabD03BgBttQMlxVIEsPJJSAeNtU2nSqnbcrLw10panHZxvZzC+NBsX
+  skip_symbols: false
+  artifact: /.*\.nupkg/

@@ -43,7 +43,7 @@ let description = "Reporting service app built using f#. Intended as an alternat
 let authors = [ "Anish Patel" ]
 
 // Tags for your project (for NuGet package)
-let tags = "f# sql"
+let tags = "f# sql ninjato"
 
 // File system information 
 let solutionFile  = "Ninjato.sln"
@@ -338,6 +338,7 @@ Target "All" DoNothing
   ==> "RunTests"
   ==> "GenerateReferenceDocs"
   ==> "GenerateDocs"
+  ==> "NuGet"
   ==> "All"
   =?> ("ReleaseDocs",isLocalBuild)
 
@@ -346,7 +347,7 @@ Target "All" DoNothing
 #else
   =?> ("SourceLink", Pdbstr.tryFind().IsSome )
 #endif
-  ==> "NuGet"
+  //==> "NuGet"
   ==> "BuildPackage"
 
 "CleanDocs"
