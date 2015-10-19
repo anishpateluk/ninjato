@@ -133,7 +133,7 @@ module QueryConstructionTests =
             and 2 = 2"
         let ``expected sql output`` = expectedSqlOutput.RemoveWhiteSpace()
         
-        let result = ``construct query`` sql context
+        let result = ConstructQuery sql context
          
         let ``actual sql output`` = result.Sql.RemoveWhiteSpace()
 
@@ -153,7 +153,7 @@ module QueryConstructionTests =
             and 2 = 2"
         let ``expected sql output`` = expectedSqlOutput.RemoveWhiteSpace()
 
-        let result = ``construct query`` sql context 
+        let result = ConstructQuery sql context 
         let ``actual sql output`` = result.Sql.RemoveWhiteSpace()
 
         ``actual sql output`` |> should equal ``expected sql output``
@@ -174,7 +174,7 @@ module QueryConstructionTests =
             and 2 = 2"            
         let ``expected sql output`` = expectedSqlOutput.RemoveWhiteSpace()
 
-        let result = ``construct query`` sql context 
+        let result = ConstructQuery sql context 
         let ``actual sql output`` = result.Sql.RemoveWhiteSpace()
 
         ``actual sql output`` |> should equal ``expected sql output``
@@ -200,7 +200,7 @@ module QueryConstructionTests =
             where 1 = 1"            
         let ``expected sql output`` = expectedSqlOutput.RemoveWhiteSpace()
 
-        let result = ``construct query`` sql context 
+        let result = ConstructQuery sql context 
         let ``actual sql output`` = result.Sql.RemoveWhiteSpace()
 
         ``actual sql output`` |> should equal ``expected sql output``
@@ -219,7 +219,7 @@ module QueryConstructionTests =
             and 2 = 2"            
         let ``expected sql output`` = expectedSqlOutput.RemoveWhiteSpace()
 
-        let result = ``construct query`` sql context 
+        let result = ConstructQuery sql context 
         let ``actual sql output`` = result.Sql.RemoveWhiteSpace()
 
         ``actual sql output`` |> should equal ``expected sql output``

@@ -178,10 +178,16 @@ module QueryConstruction =
             { Sql = str
               Parameters = map }
     
-    let ``construct query`` (csql : string) (argMap : Map<string, string>) = 
+    let private toMap dictionary = 
+        (dictionary :> seq<_>)
+        |> Seq.map (|KeyValue|)
+        |> Map.ofSeq
+
+    let ConstructQuery (csql : string) (argMap : IEnumerable<KeyValuePair<string, string>>) = 
         let str = csql.RemoveWhiteSpace()
         let ``construct parts`` = ``custom sql constructs``.Matches(str)
         let ``number of constructs`` = ``construct parts``.Count
+        let argMap = argMap |> toMap
         
         let ``parameterized sql with params`` = 
             ``construct parts``
